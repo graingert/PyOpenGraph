@@ -1,22 +1,21 @@
 from distutils.core import setup
 
 setup(
-    name = 'PyOpenGraph',
-    version = '0.2',
-    description = 'PyOpenGraph is a library written in Python for parsing Open Graph protocol information from web sites.',
-    packages = ['PyOpenGraph', ],
+    name = 'opengraph',
+    version = '1',
+    description = 'opengraph is a library written in Python for parsing Open Graph protocol information from web sites.',
+    packages = ['opengraph', ],
     author = 'Gerson Minichiello',
     author_email = 'gerson.minichiello@gmail.com',
-    url='http://github.com/minichiello/PyOpenGraph',
-    download_url = 'http://pypi.python.org/pypi/PyOpenGraph',
+    url='http://github.com/graingert/PyOpenGraph',
     platforms = 'Any',
     license = 'MIT License',
     long_description='''\
 =============
- PyOpenGraph
+ opengraph
 =============
     
-PyOpenGraph is a library written in Python for parsing Open Graph protocol information from web sites.
+opengraph is a library written in Python for parsing Open Graph protocol information from web sites.
 
 Learn more about the protocol at:
 
@@ -26,16 +25,18 @@ http://opengraphprotocol.org
  Installation
 --------------
 
-To install, download the archive at http://pypi.python.org/pypi/PyOpenGraph and decompress, run python setup.py install.
+To install::
+
+    pip install opengraph
 
 -------
  Usage
 -------
 ::
 
-    import PyOpenGraph
+    import opengraph
 
-    og = PyOpenGraph('http://www.rottentomatoes.com/m/10011268-oceans/')
+    og = opengraph('http://www.rottentomatoes.com/m/10011268-oceans/')
 
     print og.metadata # => {'url': 'http://www.rottentomatoes.com/m/10011268-oceans/', 'site_name': 'Rotten Tomatoes', 'image': 'http://images.rottentomatoes.com/images/movie/custom/68/10011268.jpg', 'type': 'movie', 'title': 'Oceans'}
 

@@ -53,5 +53,5 @@ class PyOpenGraph(object):
 
 if __name__ == '__main__':
     # Usage
-    og = PyOpenGraph('http://www.zappos.com/timberland-pro-titan-safety-toe-oxford')
+    og = opengraph('http://www.zappos.com/timberland-pro-titan-safety-toe-oxford')
     print og.metadata
