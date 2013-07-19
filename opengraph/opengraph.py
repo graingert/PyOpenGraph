@@ -37,7 +37,7 @@ class opengraph(object):
             result = parser.parse_url(url)
         else:
             result = parser.parse_string(xml, url)
-        data = result[url]
+        data = result.get(url, {})
         self.metadata = self.get_properties(data)
 
     def get_properties(self, data):
