@@ -45,9 +45,18 @@ class opengraph(object):
         try:
             dom = minidom.parse(StringIO(xml))
         except:
-            parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("dom"))
+            parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder('dom'))
             dom = parser.parse(xml, encoding='utf-8')
             pyRdfa_options.host_language = pyRdfa.HTML5_RDFA
+
+        # Workaround the problem that YouTube does not correctly set
+        #   the xmlns:og attribute on <html> node; without this,
+        #   pyRdfa does not find any OpenGraph tags
+
+        for n in dom.childNodes:
+            if n.nodeType == dom.ELEMENT_NODE and n.tagName == 'html':
+                if not n.hasAttribute('xmlns:og'):
+                    n.setAttributeNS('', 'xmlns:og', OPENGRAPH_NAMESPACES[0])
 
         self.metadata = {}
 
