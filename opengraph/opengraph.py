@@ -29,7 +29,7 @@ OPENGRAPH_NAMESPACES = [
   "http://ogp.me/ns#",
 ]
 
-class PyOpenGraph(object):
+class opengraph(object):
    
     def __init__(self, url=None, xml=None):
         parser = rdfadict.RdfaParser()
