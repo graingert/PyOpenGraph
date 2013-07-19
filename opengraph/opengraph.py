@@ -21,7 +21,12 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #THE SOFTWARE.
 
-import rdfadict
+import urllib2
+import pyRdfa
+import html5lib
+from xml.dom import minidom
+from html5lib import treebuilders
+from cStringIO import StringIO
 
 OPENGRAPH_NAMESPACES = [
   "http://opengraphprotocol.org/schema",
@@ -32,13 +37,27 @@ OPENGRAPH_NAMESPACES = [
 class opengraph(object):
    
     def __init__(self, url=None, xml=None):
-        parser = rdfadict.RdfaParser()
         if not xml:
-            result = parser.parse_url(url)
-        else:
-            result = parser.parse_string(xml, url)
-        data = result.get(url, {})
-        self.metadata = self.get_properties(data)
+            xml = urllib2.urlopen(url).read()
+
+        pyRdfa_options = pyRdfa.Options()
+
+        try:
+            dom = minidom.parse(StringIO(xml))
+        except:
+            parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("dom"))
+            dom = parser.parse(xml, encoding='utf-8')
+            pyRdfa_options.host_language = pyRdfa.HTML5_RDFA
+
+        self.metadata = {}
+
+        for s, p, o in pyRdfa.parseRDFa(dom, url, options=pyRdfa_options):
+            if s.encode('utf-8') != url:
+                continue
+            k = p.encode('utf-8')
+            for ns in OPENGRAPH_NAMESPACES:
+                if k.startswith(ns):
+                    self.metadata.setdefault(k.replace(ns, ''), o.encode('utf-8'))
 
     def get_properties(self, data):
         content = {}
