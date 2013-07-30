@@ -34,7 +34,7 @@ To install::
 -------
 ::
 
-    import opengraph
+    from opengraph.opengraph import opengraph
 
     og = opengraph('http://www.rottentomatoes.com/m/10011268-oceans/')
 
